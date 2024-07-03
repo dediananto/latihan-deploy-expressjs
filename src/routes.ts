@@ -4,6 +4,7 @@ import uploadMiddleware from "./middlewares/upload.middleware";
 import uploadController from "./controllers/upload.controller";
 import productsController from "./controllers/products.controller";
 import categoriesController from "./controllers/categories.controller";
+import ordersController from "./controllers/orders.controller";
 import authController from "./controllers/auth.controller";
 import authMiddleware from "./middlewares/auth.middleware";
 import aclMiddlware from "./middlewares/acl.middleware";
@@ -40,4 +41,8 @@ router.get(
     authController.me
   );
 router.put("/auth/profile", authMiddleware, authController.profile);
+
+router.get("/orders", ordersController.findAll);
+router.post("/orders", ordersController.create);
+
 export default router;
