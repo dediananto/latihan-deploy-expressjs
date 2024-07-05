@@ -43,6 +43,6 @@ router.get(
 router.put("/auth/profile", authMiddleware, authController.profile);
 
 router.get("/orders", ordersController.findAll);
-router.post("/orders", ordersController.create);
+router.post("/orders", authMiddleware, ordersController.create);
 
 export default router;

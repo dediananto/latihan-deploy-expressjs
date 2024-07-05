@@ -29,6 +29,7 @@ interface IPaginationQuery {
 export default {
     async create(req: Request, res: Response) {
         try {
+            console.log('request', req.body)
             await createValidationSchema.validate(req.body);
             const { orderItems, createdBy } = req.body;
             const promises = orderItems.map(async (item: { productId: any; quantity: number; }) => {

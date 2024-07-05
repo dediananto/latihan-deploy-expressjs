@@ -5,6 +5,7 @@ import { Schema, model, Document } from 'mongoose';
 import { Types } from 'mongoose';
 import mail from "@/utils/mail";
 import UsersModel from './users.model';
+import {COMPANY_NAME, CONTACT_EMAIL} from "@/utils/env";
 
 /**
  * Interface representing an order item.
@@ -85,9 +86,13 @@ OrdersSchema.post("save", async function(doc, next) {
     const order = doc;
     const user = await UsersModel.findById(order.createdBy);
     if (user) {
-        const content = await mail.render('invoice', {
+        const content = await mail.render('invoice.ejs', {
             orderItems: order.orderItems,
-            customerName: user.fullName
+            customerName: user.fullName,
+            grandTotal: order.grandTotal,
+            contactEmail: CONTACT_EMAIL,
+            companyName: COMPANY_NAME,
+            year: new Date().getFullYear()
         });
     
         await mail.send(user.email, 'Invoice', content);
